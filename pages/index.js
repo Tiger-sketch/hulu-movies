@@ -1,13 +1,15 @@
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Results from "../components/Results";
+import  PageList from '../components/PageList'
 
 export default function Home({ data2, genre }) {
   return (
-    <div>
+    <div className="flex flex-col justify-items-center">
       <Header />
       <NavBar data={genre.genres} />
-      <Results data ={data2}/>
+      <Results data={data2} />
+      <PageList data = {data2.total_pages}/>
     </div>
   );
 }
@@ -29,9 +31,8 @@ export const getServerSideProps = async (context) => {
     const [element] = genre.genres.filter((e) => {
       return e.name === context.query.genre;
     });
-    console.log(element.id);
     let with_genre = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?with_genres=${element.id}&api_key=${process.env.KEY}`
+      `https://api.themoviedb.org/3/discover/movie?with_genres=${element.id}&page=${context.query.page || 1}&api_key=${process.env.KEY}`
     );
     data2 = await with_genre.json();
   }

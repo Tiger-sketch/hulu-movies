@@ -15,7 +15,7 @@ function NavBar({ data }) {
             <h3
               key={e.id}
               onClick={() => {
-                router.push(`/?genre=${e.name}`);
+                router.push(`/?genre=${e.name}&page=1`);
               }}
               className="
             last:pr-24
